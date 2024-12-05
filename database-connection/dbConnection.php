@@ -10,6 +10,18 @@
 // } else {
 //     echo "Connected successfully";
 // }
+
+
+// delete method added 
+$db = mysqli_connect("localhost","root", "","demo_database");
+if(isset($_GET["deleteid"])){
+    $deleteid = $_GET['deleteid'];
+    $sql = "DELETE FROM student WHERE id =$delectid";
+    // check id if have  in database 
+    if(mysqli_query($db, $sql)==true){
+        header("location:dbConnection.php");
+}}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +52,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Delete</th>
+        
     </tr>
     <?php 
     $db = mysqli_connect("localhost","root", "","demo_database");
@@ -53,7 +67,8 @@
                     <td>$id</td>
                     <td>$name</td>
                     <td>$email</td>
-        ";
+                    <td><a href='dbConnection.php?deleteid=$id'>Delete</a></td>
+       </tr> ";
     }
     }
     
