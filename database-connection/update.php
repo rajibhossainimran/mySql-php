@@ -1,5 +1,34 @@
 <?php 
+// Database connection
+$db = mysqli_connect("localhost", "root", "", "demo_database");
 
+// If the 'updateid' parameter is set, fetch the record to be updated
+if (isset($_GET["updateid"])) {
+    $update_id = $_GET['updateid'];
+    $sql = "SELECT * FROM student WHERE your_id = $update_id";
+    $updateData = mysqli_query($db, $sql);
+    $update = mysqli_fetch_assoc($updateData);
+    $id = $update['your_id'];
+    $name = $update['name'];
+    $email = $update['email'];
+}
+
+// Handle the form submission when the user clicks 'Update'
+if (isset($_POST["btnUpdate"])) {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    // Perform the update query
+    $updateQuery = "UPDATE student SET name = '$name', email = '$email' WHERE your_id = $id";
+    
+    if (mysqli_query($db, $updateQuery)) {
+        // Redirect to a success page or display a success message
+        header("location:dbConnection.php");
+    } else {
+        echo "<script>alert('Error updating record: " . mysqli_error($db) . "');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -87,20 +116,19 @@
 </head>
 <body>
     <section>
-        <h1>Insert Your Data</h1>
+        <h1>Update Your Data</h1>
         <form action="" method="post">
             <label for="id">USER ID</label>
-            <input type="text" name="id" id="id" placeholder="Enter your id" required><br>
+            <input type="text" value="<?php echo $id; ?>" name="id" id="id" placeholder="Enter your id" required><br>
 
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Enter your name" required><br>
+            <input type="text" value="<?php echo $name; ?>" name="name" id="name" placeholder="Enter your name" required><br>
 
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email" required><br>
+            <input type="email" value="<?php echo $email; ?>" name="email" id="email" placeholder="Enter your email" required><br>
 
-            <button type="submit" name="btnInsert">Update</button>
+            <button type="submit" name="btnUpdate">Update</button>
         </form>
     </section>
 </body>
 </html>
-
