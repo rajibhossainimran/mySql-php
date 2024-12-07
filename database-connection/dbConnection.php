@@ -69,7 +69,9 @@ if (isset($_GET["deleteid"])) {
             die("Connection failed: " . mysqli_connect_error());
         } else {
             $user = $db->query("select * from student");
+            $counter =1;
             while (list($sl,$id, $name, $email) = $user->fetch_row()) {
+                $sl = $counter++;
                 echo "<tr>
                     <td>$sl</td>
                     <td>$id</td>
