@@ -59,6 +59,7 @@ if (isset($_GET["deleteid"])) {
             <th>Name</th>
             <th>Email</th>
             <th>Delete</th>
+            <th>Update</th>
 
         </tr>
         <?php
@@ -75,6 +76,7 @@ if (isset($_GET["deleteid"])) {
                     <td>$name</td>
                     <td>$email</td>
                     <td><a href='dbConnection.php?deleteid=$id'>Delete</a></td>
+                    <td><a href='update.php?updateid=$id'>Update</a></td>
        </tr> ";
             }
         }
