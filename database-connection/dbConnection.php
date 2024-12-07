@@ -16,7 +16,7 @@
 $db = mysqli_connect("localhost", "root", "", "demo_database");
 if (isset($_GET["deleteid"])) {
     $delete_id = $_GET['deleteid'];
-    $sql = "DELETE FROM student WHERE id =$delete_id";
+    $sql = "DELETE FROM student WHERE your_id =$delete_id";
     if (mysqli_query($db, $sql) == true) {
         header("location:dbConnection.php");
     }
@@ -54,7 +54,8 @@ if (isset($_GET["deleteid"])) {
     <h2>User Information</h2>
     <table>
         <tr>
-            <th>ID</th>
+            <th>SL No</th>
+            <th>Your Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Delete</th>
@@ -67,8 +68,9 @@ if (isset($_GET["deleteid"])) {
             die("Connection failed: " . mysqli_connect_error());
         } else {
             $user = $db->query("select * from student");
-            while (list($id, $name, $email) = $user->fetch_row()) {
+            while (list($sl,$id, $name, $email) = $user->fetch_row()) {
                 echo "<tr>
+                    <td>$sl</td>
                     <td>$id</td>
                     <td>$name</td>
                     <td>$email</td>

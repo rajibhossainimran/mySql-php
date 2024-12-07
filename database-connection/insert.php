@@ -1,3 +1,20 @@
+<?php 
+$dababase =mysqli_connect("localhost","root","","demo_database");
+if(isset($_POST["btnInsert"])){
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO student(your_id,name, email) VALUES ('$id','$name','$email')";
+    if(mysqli_query($dababase,$sql)){
+        echo "data insert";
+        header("location:dbConnection.php");
+    }else{
+        echo "not insert";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,81 +22,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insert Data</title>
     <style>
-        /* General reset */
-        * {
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
 
         section {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 400px;
-            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
         }
 
         h1 {
-            font-size: 24px;
-            color: #333;
+            text-align: center;
+            color: #4CAF50;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         label {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 5px;
             display: block;
-            text-align: left;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
         }
 
-        input[type="text"], input[type="email"] {
+        input[type="text"],
+        input[type="email"] {
             width: 100%;
             padding: 12px;
             margin: 8px 0 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
             font-size: 16px;
-            color: #333;
-            background-color: #f9f9f9;
-            transition: all 0.3s ease;
         }
 
-        input[type="text"]:focus, input[type="email"]:focus {
+        input[type="text"]:focus,
+        input[type="email"]:focus {
             border-color: #4CAF50;
-            background-color: #ffffff;
+            outline: none;
         }
 
         button[type="submit"] {
-            width: 100%;
-            padding: 12px;
             background-color: #4CAF50;
             color: white;
-            font-size: 18px;
             border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border-radius: 4px;
+            width: 100%;
         }
 
         button[type="submit"]:hover {
             background-color: #45a049;
         }
 
-        /* Responsive design */
-        @media (max-width: 480px) {
+        /* Responsive Design */
+        @media (max-width: 600px) {
             section {
                 width: 90%;
             }
@@ -90,6 +102,9 @@
     <section>
         <h1>Insert Your Data</h1>
         <form action="" method="post">
+            <label for="id">USER ID</label>
+            <input type="text" name="id" id="id" placeholder="Enter your id" required><br>
+
             <label for="name">Name</label>
             <input type="text" name="name" id="name" placeholder="Enter your name" required><br>
 
@@ -101,3 +116,4 @@
     </section>
 </body>
 </html>
+
