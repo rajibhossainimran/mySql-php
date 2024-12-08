@@ -50,8 +50,9 @@ if (isset($_GET["deleteid"])) {
 </head>
 
 <body>
-
-    <h2>User Information</h2>
+    
+    <h2>Information</h2>
+    <p><a href="insert.php">Insert data</a></p>
     <table>
         <tr>
             <th>SL No</th>

@@ -7,6 +7,7 @@ if (isset($_GET["updateid"])) {
     $update_id = $_GET['updateid'];
     $sql = "SELECT * FROM student WHERE your_id = $update_id";
     $updateData = mysqli_query($db, $sql);
+    
     $update = mysqli_fetch_assoc($updateData);
     $id = $update['your_id'];
     $name = $update['name'];
@@ -119,13 +120,13 @@ if (isset($_POST["btnUpdate"])) {
         <h1>Update Your Data</h1>
         <form action="" method="post">
             <label for="id">USER ID</label>
-            <input type="text" value="<?php echo $id; ?>" name="id" id="id" placeholder="Enter your id" required><br>
+            <input type="text" value="<?php echo $id; ?>" name="id" id="id"  placeholder="Enter your id" ><br>
 
             <label for="name">Name</label>
-            <input type="text" value="<?php echo $name; ?>" name="name" id="name" placeholder="Enter your name" required><br>
+            <input type="text" value="<?php echo $name; ?>" name="name" id="name" placeholder="Enter your name" ><br>
 
             <label for="email">Email</label>
-            <input type="email" value="<?php echo $email; ?>" name="email" id="email" placeholder="Enter your email" required><br>
+            <input type="email" value="<?php echo $email; ?>" name="email" id="email" placeholder="Enter your email" ><br>
 
             <button type="submit" name="btnUpdate">Update</button>
         </form>
