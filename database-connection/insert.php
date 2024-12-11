@@ -22,7 +22,6 @@ if(isset($_POST["btnInsert"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insert Data</title>
     <style>
-        /* Global styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7fc;
@@ -90,7 +89,6 @@ if(isset($_POST["btnInsert"])){
             background-color: #45a049;
         }
 
-        /* Responsive Design */
         @media (max-width: 600px) {
             section {
                 width: 90%;

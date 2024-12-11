@@ -1,16 +1,4 @@
 <?php
-// $hostname="localhost";
-// $user = "root";
-// $password ="";
-// $dbname = "db_name";
-// $connection = mysqli_connect("localhost", "root", "","demo_database");
-
-// if (!$connection) {
-//     die("Connection failed: " . mysqli_connect_error());
-// } else {
-//     echo "Connected successfully";
-// }
-
 
 // anoter way add database
 $db = mysqli_connect("localhost", "root", "", "demo_database");
@@ -50,8 +38,9 @@ if (isset($_GET["deleteid"])) {
 </head>
 
 <body>
-
-    <h2>User Information</h2>
+    
+    <h2>Information</h2>
+    <p><a href="insert.php">Insert data</a></p>
     <table>
         <tr>
             <th>SL No</th>
