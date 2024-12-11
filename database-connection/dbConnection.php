@@ -12,7 +12,7 @@
 // }
 
 
-// delete method added 
+// anoter way add database
 $db = mysqli_connect("localhost", "root", "", "demo_database");
 if (isset($_GET["deleteid"])) {
     $delete_id = $_GET['deleteid'];
