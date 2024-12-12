@@ -1,5 +1,5 @@
 <?php 
-// Database connection
+
 $db = mysqli_connect("localhost", "root", "", "demo_database");
 
 // If the 'updateid' parameter is set, fetch the record to be updated
