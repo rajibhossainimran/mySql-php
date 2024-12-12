@@ -17,6 +17,7 @@ if(isset($_POST["btnSubmit"])){
     <title>Insert Form</title>
 </head>
 <body>
+    <!-- insert form data  -->
     <section>
         <form action="" method="post">
             <label for="name">Name :</label>
@@ -30,6 +31,8 @@ if(isset($_POST["btnSubmit"])){
         </form>
     </section>
 <br><br><br>
+
+<!-- product table data anoter form  -->
     <section>
         <h1>PRODUCT TABLE</h1>
         <form action="" method="post">
