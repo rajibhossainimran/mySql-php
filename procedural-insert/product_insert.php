@@ -5,9 +5,14 @@ if(isset($_POST["btnSubmit"])){
     $contact = $_POST['contact'];
     $db->query("call brand_insert('$name','$contact')");
 }
-
+if(isset($_POST["btnProduct"])){
+    $name = $_POST['bname'];
+    $price = $_POST['bprice'];
+    $nanuf = $_POST['manuf'];
+    // $id = $_POST['manufac'];
+    $db->query("call add_product('$name','$price','$nanuf')");
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,21 +23,22 @@ if(isset($_POST["btnSubmit"])){
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            min-height: 100vh;
         }
 
         section {
-            background-color: #ffffff;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             margin-bottom: 20px;
         }
@@ -42,6 +48,7 @@ if(isset($_POST["btnSubmit"])){
             color: #333;
             font-size: 24px;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         label {
@@ -53,45 +60,35 @@ if(isset($_POST["btnSubmit"])){
 
         input, select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
 
-        
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 12px 20px;
+            padding: 14px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
             width: 100%;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: #45a049;
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        .form-container form {
-            width: 100%;
-        }
-
-        .form-container section {
-            margin-bottom: 40px;
         }
 
         .separator {
@@ -100,13 +97,59 @@ if(isset($_POST["btnSubmit"])){
             color: #777;
         }
 
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-action {
+            background-color: #ff4c4c;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            background-color: #e04343;
+        }
+
+        .btn-update {
+            background-color: #ffa500;
+        }
+
+        .btn-update:hover {
+            background-color: #e68a00;
+        }
     </style>
 </head>
 <body>
 
     <!-- Personal Info Form -->
     <section>
-        <h1>Personal Information</h1>
+        <h1>Add Brand Name</h1>
         <form action="" method="post">
             <label for="name">Name:</label>
             <input type="text" name="name" required><br>
@@ -122,19 +165,19 @@ if(isset($_POST["btnSubmit"])){
 
     <!-- Product Form -->
     <section>
-        <h1>Product Information</h1>
+        <h1>Add Product</h1>
         <form action="" method="post">
-            <label for="bname">Brand Name:</label>
+            <label for="bname">Product Name:</label>
             <input type="text" name="bname" required><br>
 
             <label for="bprice">Price:</label>
             <input type="number" name="bprice" required><br>
 
-            <label for="manufac">Manufacturer:</label>
-            <select name="manufac" required>
+            <label for="manuf">Manufacturer:</label>
+            <select name="manuf" required>
                 <?php 
-                $manufac = $db->query("SELECT * FROM brand");
-                while(list($_bid, $_bname) = $manufac->fetch_row()){
+                $manufaclist = $db->query("SELECT * FROM brand");
+                while(list($_bid, $_bname) = $manufaclist->fetch_row()){
                     echo "<option value='$_bid'>$_bname</option>";
                 }
                 ?>
@@ -143,6 +186,45 @@ if(isset($_POST["btnSubmit"])){
             <button type="submit" name="btnProduct">Submit</button>
         </form>
     </section>
+
+    <!-- Product List Table -->
+    <div class="table-container">
+        <h2>Product Information</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>SL No</th>
+                    <th>Brand</th>
+                    <th>Contact</th>
+                    <th>Product name</th>
+                    <th>Product Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $db = mysqli_connect("localhost","root","","products_data");
+
+                if (!$db) {
+                    die("Connection failed: " . mysqli_connect_error());
+                } else {
+                    $user = $db->query("SELECT * FROM product_details");
+                    $counter = 1;
+                    while (list($brand,$contact, $product_name, $price) = $user->fetch_row()) {
+                        $counter++;
+                        echo "<tr>
+                            <td>$counter</td>
+                            <td>$brand</td>
+                            <td>$contact</td>
+                            <td>$product_name</td>
+                            <td>$price</td>
+                        </tr>";
+                       
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
